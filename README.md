@@ -31,8 +31,7 @@ The Cisco serves as a secondary / access switch for 1 GbE devices, backup connec
 
 The network will eventually connect servers, storage, clients, wireless access points and IoT devices using a combination of 1 GbE, 10 GbE and VLANs.
 
-<img width="4444" height="3126" alt="network_topology_diagram" src="https://github.com/user-attachments/assets/add6b42b-725f-443e-89d7-5f35e45e5776" />
-
+<img width="4444" height="3126" alt="network_topology_diagram" src="https://github.com/user-attachments/assets/dc992f82-14bb-4344-82a2-03d47769d60d" />
 
 > **Live UniFi topology screenshot coming soon.**
 
