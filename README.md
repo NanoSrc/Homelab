@@ -19,7 +19,7 @@ Beyond learning, I'd also like to gradually build the knowledge and skills neede
 
 The setup will likely change from time to time (upgrades, downgrades, location changes, combustion).
 
-> **Pictures coming soon**
+> **More pictures coming soon**
 
 ## Current Topology
 
@@ -30,6 +30,9 @@ The UDM SE handles the internet gateway, firewalling and general network service
 The Cisco serves as a secondary / access switch for 1 GbE devices, backup connectivity and experimenting with Layer 2 / Layer 3 networking without having to disturb the main network.
 
 The network will eventually connect servers, storage, clients, wireless access points and IoT devices using a combination of 1 GbE, 10 GbE and VLANs.
+
+<img width="4444" height="3126" alt="network_topology_diagram" src="https://github.com/user-attachments/assets/add6b42b-725f-443e-89d7-5f35e45e5776" />
+
 
 > **Live UniFi topology screenshot coming soon.**
 
