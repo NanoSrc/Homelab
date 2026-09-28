@@ -23,11 +23,18 @@ The setup will likely change from time to time (upgrades, downgrades, location c
 
 ## Current Topology
 
-The network is being built around a **Ubiquiti UniFi Dream Machine SE**, an **Arista DCS-7050SX-64** and a **Cisco Catalyst 3750-X**, each serving a different purpose.
+The network is currently built around a **Ubiquiti UniFi Dream Machine SE** and an **Arista DCS-7050SX-64**.
 
-The UDM SE handles the internet gateway, firewalling and general network services such as DHCP, while the Arista provides the primary high-speed 10 GbE switching fabric.
+The UDM SE acts as the internet gateway, firewall and router between the lab's VLANs while also providing general network services such as DHCP. Its built-in RJ45 ports handle lower-bandwidth copper devices and management interfaces where 10 GbE would accomplish little beyond making the cabling more expensive.
 
-The Cisco serves as a secondary / access switch for 1 GbE devices, backup connectivity and experimenting with Layer 2 / Layer 3 networking without having to disturb the main network.
+The Arista forms the high-speed switching core of the lab. Servers, storage and other bandwidth-heavy devices can connect through 10G-SR optics and multimode fibre.
+
+The UDM SE and Arista are connected through a 10 GbE trunk carrying the lab's VLANs.
+
+A **Cisco Catalyst 3750-X** is also available, but is no longer intended to serve as the primary RJ45 access switch. It is kept as a backup switch, additional temporary 1 GbE capacity and, more importantly, hardware I can experiment with without disturbing the main network.
+
+If the number of copper devices eventually exceeds the UDM SE's practical capacity, I intend to add a more suitable modern RJ45 access switch rather than make the 3750-X a permanent part of the primary path.
+
 
 The network will eventually connect servers, storage, clients, wireless access points and IoT devices using a combination of 1 GbE, 10 GbE and VLANs.
 
@@ -37,6 +44,23 @@ The network will eventually connect servers, storage, clients, wireless access p
 
 Because much of the switching infrastructure consists of third-party equipment, the UniFi topology may not represent every downstream device or link perfectly. The architecture documentation in this repository is the authoritative reference.
 
+### Arista Port Layout
+
+The Arista's 48 SFP+ ports are currently divided into logical ranges. This makes the intended network of a physical connection immediately identifiable while still leaving plenty of room between the relatively small number of optics currently installed.
+
+<img width="1419" height="156" alt="Arista_Markings" src="https://github.com/user-attachments/assets/58823f4b-7034-442f-aaa7-b99d6b89e823" />
+
+| Ports | Assignment |
+| --- | --- |
+| Ethernet 1–8 | 🔴 VLAN 10 Management |
+| Ethernet 9–28 | 🔵 VLAN 20 Servers |
+| Ethernet 29–33 | 🟠 VLAN 30 Clients |
+| Ethernet 34 | 🟢 10 GbE trunk to UDM SE |
+| Ethernet 35–40 | 🟣 VLAN 40 IoT |
+| Ethernet 41–48 | ⚪ Reserved / administratively disabled |
+| QSFP+ 49–52 | ⚪ Reserved / administratively disabled |
+
+The large server allocation is partly practical and partly because I have 48 SFP+ ports and therefore absolutely no reason to put every optic directly next to every other optic.
 
 ## What I'm Building
 
@@ -68,14 +92,38 @@ The current and planned setup includes:
 
 > [!NOTE]
 > **NEW ADDITION:**
-> Arista DCS-7050SX-64  
->  1.28 Terabits per second of switching capacity  
-> I actually did need an SFP+ switch.  
-> (Maybe not one this old and ridiculous)  
+> Dell PowerEdge R630  
+>  1U of dual-socket enterprise compute  
+> Finally, a server I actually intend to use as the main server.  
+> (Storage budget sold separately)  
+> THIS server is considerably cooler than the HPE one
+
+* Dell PowerEdge R630
+  * Primary server
+  * 1U enterprise server
+  * 8 × 2.5" SFF hot-swap bays
+  * 2 × Intel Xeon E5-2620 v4
+  * 16 cores / 32 threads total
+  * 64 GB DDR4 ECC memory
+  * 10K SAS storage
+  * Proxmox VE
+  * iDRAC8 remote management
+  * `10.10.20.10` on the server network
+  * 10 GbE SFP+ connectivity planned / being added
+  * Main host for VMs, containers, game servers, websites and other self-hosted services
+
+* HPE ProLiant DL180 Gen9
+  * ~12 years old
+  * Enterprise 2U server
+  * Secondary lab / testing / backup server
+  * Proxmox VE
+  * iLO4 remote management
+  * 10 GbE connectivity
+  * Intended for testing, backup workloads and experiments that I would rather not perform on the primary R630
 
 * Arista DCS-7050SX-64
   * ~12 years old
-  * Main high-speed switch
+  * Main high-speed switch (Main noisemaker)
   * 48 × 1/10GbE SFP+ ports
   * 4 × 40GbE QSFP+ ports
   * 1.28 Tbps switching capacity
@@ -83,35 +131,30 @@ The current and planned setup includes:
   * The 40GbE ports currently exist mostly as a flex
 
 * Ubiquiti UniFi Dream Machine SE
-  * Modern compared to most of the rest
   * Main internet gateway and firewall
+  * Inter-VLAN routing
+  * DHCP and general network services
   * UniFi controller
-  * Intended to handle general network services such as DHCP
-  * Built-in PoE connectivity
-  * Likely to be the more user-friendly side of the network
+  * 10 GbE trunk to the Arista
+  * Built-in RJ45 ports currently serve ordinary 1 GbE and management devices
+  * PoE connectivity for devices such as the wireless access point
+  * Acts as the friendly modern translator between me and the pile of retired enterprise hardware
 
 * Cisco Catalyst 3750-X
-  * ~16 years old (vintage networking hardware, but it suffices)
-  * Secondary / backup / access switch
-  * Useful for 1 GbE devices that don't need to consume Arista ports
-  * Layer 2 / Layer 3 switching and routing
+  * ~16 years old
   * 24 × 1GbE RJ45 ports
-  * Also serves as a platform for Cisco networking experiments
-
+  * Layer 2 / Layer 3 switching and routing
+  * Backup / spare switch rather than part of the primary network path
+  * Available for temporary additional RJ45 capacity
+  * Primarily useful as a platform for Cisco networking experiments
+  * Originally bought to provide the Cisco with 10 GbE connectivity before the 48-port Arista appeared and somewhat invalidated the entire purchasing decision
+  
 * Cisco C3KX-NM-10G
   * Network module for the Catalyst 3750-X
   * 2 × 1/10GbE SFP+ ports
   * 2 × 1GbE SFP ports
   * Bought before the 48-port Arista appeared and made the purchase slightly questionable
   * Still useful for a 10GbE uplink between the Cisco and the rest of the network
-
-* HPE ProLiant DL180 Gen9
-  * ~12 years old
-  * Enterprise 2U server
-  * Running Proxmox VE
-  * iLO remote management
-  * Used for virtualization, development, infrastructure experiments and self-hosted services
-  * Has 10GbE connectivity (thanks to cheap NICs)
 
 * Synology RS810+
   * Old 1U rackmount NAS
@@ -134,10 +177,15 @@ The current and planned setup includes:
   * 40 GbE available for future questionable decisions
 
 * UPS / power protection
-  * Maybe
+  * Maybe™
 
 * Various sensors and IoT hardware
   * Temperature and other telemetry
+
+* Rack power distribution
+  * 2 × metered / protected rack PDUs planned
+  * Redundant server PSUs will eventually be distributed between both PDUs
+  * Integrated power monitoring because I would probably rather not know what this setup costs to run
 
 > [!NOTE]
 > Old hardware doesn't mean useless hardware
