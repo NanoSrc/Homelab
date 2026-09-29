@@ -154,7 +154,10 @@ interface Vlan10
 end
 write memory
 
-
+!
+!===== NOTE TO SELF ===== 
+!===== NOT CONFIG RELEVANT =====
+!
 
 1 to 8    MANAGEMENT
 9 to 28   SERVERS
