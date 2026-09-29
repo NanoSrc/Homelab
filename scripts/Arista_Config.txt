@@ -1,0 +1,166 @@
+enable
+
+configure terminal
+
+!
+! ============================================================
+! VLAN DEFINITIONS
+! ============================================================
+!
+
+vlan 10
+   name MANAGEMENT
+
+vlan 20
+   name SERVERS
+
+vlan 30
+   name CLIENTS
+
+vlan 40
+   name IOT
+
+!
+! ============================================================
+! VLAN 10 - MANAGEMENT
+! Ethernet1-8
+! ============================================================
+!
+
+interface Ethernet1-8
+   description VLAN10-MANAGEMENT
+   switchport mode access
+   switchport access vlan 10
+   no shutdown
+
+!
+! ============================================================
+! VLAN 20 - SERVERS
+! Ethernet9-28
+! ============================================================
+!
+
+interface Ethernet9-28
+   description VLAN20-SERVERS
+   switchport mode access
+   switchport access vlan 20
+   no shutdown
+
+!
+! ============================================================
+! VLAN 30 - CLIENTS
+! Ethernet29-33
+! ============================================================
+!
+
+interface Ethernet29-33
+   description VLAN30-CLIENTS
+   switchport mode access
+   switchport access vlan 30
+   no shutdown
+
+!
+! ============================================================
+! Ethernet34 - UDM SE 10G TRUNK
+! Carries all configured VLANs to the router
+! ============================================================
+!
+
+interface Ethernet34
+   description UDM-SE-UPLINK
+   switchport mode trunk
+   switchport trunk allowed vlan 10,20,30,40
+   no shutdown
+
+!
+! ============================================================
+! VLAN 40 - IOT
+! Ethernet35-40
+! ============================================================
+!
+
+interface Ethernet35-40
+   description VLAN40-IOT
+   switchport mode access
+   switchport access vlan 40
+   no shutdown
+
+!
+! ============================================================
+! Ethernet41-48 - RESERVED
+! ============================================================
+!
+
+interface Ethernet41-48
+   description RESERVED
+   shutdown
+
+!
+! ============================================================
+! QSFP+ PORTS - RESERVED / DISABLED
+! Currently configured as 4x10G breakout interfaces
+! ============================================================
+!
+
+interface Ethernet49/1-4
+   description RESERVED-QSFP
+   shutdown
+
+interface Ethernet50/1-4
+   description RESERVED-QSFP
+   shutdown
+
+interface Ethernet51/1-4
+   description RESERVED-QSFP
+   shutdown
+
+interface Ethernet52/1-4
+   description RESERVED-QSFP
+   shutdown
+
+!
+! ============================================================
+! DEDICATED OUT-OF-BAND MANAGEMENT
+! ============================================================
+!
+
+vrf instance MGMT
+
+interface Management1
+   description ARISTA-MANAGEMENT
+   vrf MGMT
+   ip address 10.10.10.2/24
+   no shutdown
+
+!
+! Management gateway - UDM SE
+!
+
+ip route vrf MGMT 0.0.0.0/0 10.10.10.1
+
+!
+! Remove old duplicate management IP from VLAN10 SVI
+!
+
+interface Vlan10
+   no ip address
+
+!
+! ============================================================
+! SAVE
+! ============================================================
+!
+
+end
+write memory
+
+
+
+1 to 8    MANAGEMENT
+9 to 28   SERVERS
+29 to 33  CLIENTS
+34        UDM TRUNK
+35 to 40  IOT
+41 to 48  RESERVED
+
+49 to 52  QSFP+ RESERVED
