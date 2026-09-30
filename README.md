@@ -38,8 +38,8 @@ If the number of copper devices eventually exceeds the UDM SE's practical capaci
 
 The network will eventually connect servers, storage, clients, wireless access points and IoT devices using a combination of 1 GbE, 10 GbE and VLANs.
 
-(OUTDATED, MISSING R630)
-<img width="4444" height="3126" alt="network_topology_diagram" src="https://github.com/user-attachments/assets/dc992f82-14bb-4344-82a2-03d47769d60d" />
+(OUTDATED README SPECIFICATION; NEW TOPOLOGY)
+<img width="4602" height="3607" alt="New_Network_Diagram" src="https://github.com/user-attachments/assets/b90f9e37-c45b-4863-8d34-470680961e70" />
 
 > **Live UniFi topology screenshot coming soon.**
 
