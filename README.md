@@ -23,25 +23,22 @@ The setup will likely change from time to time (upgrades, downgrades, location c
 
 ## Current Topology
 
-The network is currently built around a **Ubiquiti UniFi Dream Machine SE** and an **Arista DCS-7050SX-64**.
+The network is currently built around a **Ubiquiti UniFi Dream Machine SE** and an **Arista DCS-7050SX-64**, with a modern UniFi RJ45 / PoE access switch planned as the always-on copper network layer.
 
-The UDM SE acts as the internet gateway, firewall and router between the lab's VLANs while also providing general network services such as DHCP. Its built-in RJ45 ports handle lower-bandwidth copper devices and management interfaces where 10 GbE would accomplish little beyond making the cabling more expensive.
+The UDM SE acts as the internet gateway, firewall and router between the lab's VLANs while also providing general network services such as DHCP.
 
-The Arista forms the high-speed switching core of the lab. Servers, storage and other bandwidth-heavy devices can connect through 10G-SR optics and multimode fibre.
+The future UniFi access switch will handle ordinary RJ45 devices, PoE equipment, management interfaces, access points, Raspberry Pis, clients and other lower-bandwidth or always-on devices.
 
-The UDM SE and Arista are connected through a 10 GbE trunk carrying the lab's VLANs.
-
-A **Cisco Catalyst 3750-X** is also available, but is no longer intended to serve as the primary RJ45 access switch. It is kept as a backup switch, additional temporary 1 GbE capacity and, more importantly, hardware I can experiment with without disturbing the main network.
-
-If the number of copper devices eventually exceeds the UDM SE's practical capacity, I intend to add a more suitable modern RJ45 access switch rather than make the 3750-X a permanent part of the primary path.
-
+The Arista forms the high-speed switching fabric of the lab. Servers, storage and other bandwidth-heavy devices connect through 10G-SR optics and multimode fibre.
 
 The network will eventually connect servers, storage, clients, wireless access points and IoT devices using a combination of 1 GbE, 10 GbE and VLANs.
 
 (OUTDATED README SPECIFICATION; NEW TOPOLOGY)
 <img width="4602" height="3607" alt="New_Network_Diagram" src="https://github.com/user-attachments/assets/b90f9e37-c45b-4863-8d34-470680961e70" />
 
-> **Live UniFi topology screenshot coming soon.**
+This arrangement allows the Arista and the heavier lab equipment to be powered off without taking down the ordinary RJ45 network, management access or other always-on infrastructure.
+
+> **Live UniFi topology screenshot coming at some point.**
 
 Because much of the switching infrastructure consists of third-party equipment, the UniFi topology may not represent every downstream device or link perfectly. The architecture documentation in this repository is the authoritative reference.
 
@@ -56,7 +53,7 @@ The Arista's 48 SFP+ ports are currently divided into logical ranges. This makes
 | Ethernet 1–8 | 🔴 VLAN 10 Management |
 | Ethernet 9–28 | 🔵 VLAN 20 Servers |
 | Ethernet 29–33 | 🟠 VLAN 30 Clients |
-| Ethernet 34 | 🟢 10 GbE trunk to UDM SE |
+| Ethernet 34 | 🟢 10 GbE trunk to main access switch |
 | Ethernet 35–40 | 🟣 VLAN 40 IoT |
 | Ethernet 41–48 | ⚪ Reserved / administratively disabled |
 | QSFP+ 49–52 | ⚪ Reserved / administratively disabled |
@@ -136,7 +133,7 @@ The current and planned setup includes:
   * Inter-VLAN routing
   * DHCP and general network services
   * UniFi controller
-  * 10 GbE trunk to the Arista
+  * 10 GbE trunk to the main switch
   * Built-in RJ45 ports currently serve ordinary 1 GbE and management devices
   * PoE connectivity for devices such as the wireless access point
   * Acts as the friendly modern translator between me and the pile of retired enterprise hardware
@@ -174,7 +171,7 @@ The current and planned setup includes:
 * 1 GbE / 10 GbE networking
   * 1 GbE for peripherals, IoT and devices that simply don't need more
   * 10 GbE SFP+ for servers and my PC (it's local anyway)
-  * Multimode OM3 fibre and 10G-SR optics
+  * Multimode OM3 fibre and 10G-SR optics / Arista optics
   * 40 GbE available for future questionable decisions
 
 * UPS / power protection
@@ -185,7 +182,7 @@ The current and planned setup includes:
 
 * Rack power distribution
   * 2 × metered / protected rack PDUs planned
-  * Redundant server PSUs will eventually be distributed between both PDUs
+  * Two metered/protected PDUs divide the rack into an always-on infrastructure side and a lab/high-power side. Core networking and low-power infrastructure can remain online while the Arista, servers and storage lab are powered down.
   * Integrated power monitoring because I would probably rather not know what this setup costs to run
 
 > [!NOTE]
