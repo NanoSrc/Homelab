@@ -50,15 +50,31 @@ The Arista's 48 SFP+ ports are currently divided into logical ranges. This makes
 
 | Ports | Assignment |
 | --- | --- |
-| Ethernet 1–8 | 🔴 VLAN 10 Management |
-| Ethernet 9–28 | 🔵 VLAN 20 Servers |
-| Ethernet 29–33 | 🟠 VLAN 30 Clients |
+| Ethernet 1-8 | 🔴 VLAN 10 Management |
+| Ethernet 9-28 | 🔵 VLAN 20 Servers |
+| Ethernet 29-33 | 🟠 VLAN 30 Clients |
 | Ethernet 34 | 🟢 10 GbE trunk to main access switch |
-| Ethernet 35–40 | 🟣 VLAN 40 IoT |
-| Ethernet 41–48 | ⚪ Reserved / administratively disabled |
-| QSFP+ 49–52 | ⚪ Reserved / administratively disabled |
+| Ethernet 35-40 | 🟣 VLAN 40 IoT |
+| Ethernet 41-48 | ⚪ Reserved / administratively disabled |
+| QSFP+ 49-52 | ⚪ Reserved / administratively disabled |
 
 The large server allocation is partly practical and partly because I have 48 SFP+ ports and therefore absolutely no reason to put every optic directly next to every other optic.
+
+### Management Network
+
+VLAN 10 is reserved for infrastructure management.
+
+This includes devices with dedicated out-of-band management interfaces such as:
+
+* Dell iDRAC
+* HPE iLO4
+* Proxmox Management
+* Arista Management1
+* Cisco Management
+
+It can also include in-band management interfaces for devices that do not have a dedicated management controller.
+
+The goal is to keep administrative access separate from ordinary server traffic on VLAN 20 and from client / IoT networks.
 
 ## What I'm Building
 
@@ -246,5 +262,7 @@ Whether it's a networking idea, a new service, an automation, a monitoring featu
 I will make some custom icons and logos for the fun of it.
 
 Also hi cally ♡ our future house will have a SICK network and SICK rack (electricity bills and noise issues will be addressed later).
+
+<img width="444" height="153" alt="image" src="https://github.com/user-attachments/assets/22ecadfc-c07c-4d02-9e34-2439abac41fc" />
 
 This project and the ideas of it will grow alongside the homelab.
