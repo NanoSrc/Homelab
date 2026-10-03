@@ -61,13 +61,13 @@ interface Ethernet29-33
 
 !
 ! ============================================================
-! Ethernet34 - UDM SE 10G TRUNK
-! Carries all configured VLANs to the router
+! Ethernet34 - UNIFI PRO MAX 16 POE 10G TRUNK
+! Carries VLANs between the UniFi access switch and Arista
 ! ============================================================
 !
 
 interface Ethernet34
-   description UDM-SE-UPLINK
+   description UNIFI-PRO-MAX-UPLINK
    switchport mode trunk
    switchport trunk allowed vlan 10,20,30,40
    no shutdown
