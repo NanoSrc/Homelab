@@ -23,23 +23,39 @@ The setup will likely change from time to time (upgrades, downgrades, location c
 
 ## Current Topology
 
-The network is currently built around a **Ubiquiti UniFi Dream Machine SE** and an **Arista DCS-7050SX-64**, with a modern UniFi RJ45 / PoE access switch planned as the always-on copper network layer.
+The network is currently built around a **Ubiquiti UniFi Dream Machine SE**, a **UniFi Pro Max 16 PoE** and an **Arista DCS-7050SX-64**.
 
-The UDM SE acts as the internet gateway, firewall and router between the lab's VLANs while also providing general network services such as DHCP.
+The UDM SE acts as the internet gateway, firewall and router between the lab's VLANs while also providing general network services such as DHCP and hosting the UniFi Network controller.
 
-The future UniFi access switch will handle ordinary RJ45 devices, PoE equipment, management interfaces, access points, Raspberry Pis, clients and other lower-bandwidth or always-on devices.
+The Pro Max 16 PoE serves as the main always-on RJ45 and PoE access switch. It handles management interfaces, access points, Raspberry Pis, clients, IoT devices and other lower-bandwidth copper equipment.
 
 The Arista forms the high-speed switching fabric of the lab. Servers, storage and other bandwidth-heavy devices connect through 10G-SR optics and multimode fibre.
 
-The network will eventually connect servers, storage, clients, wireless access points and IoT devices using a combination of 1 GbE, 10 GbE and VLANs.
-
 <img width="4334" height="3156" alt="New_New_Network_Diagram" src="https://github.com/user-attachments/assets/329045be-455c-44db-8ca7-2849305b0a7d" />
 
-This arrangement allows the Arista and the heavier lab equipment to be powered off without taking down the ordinary RJ45 network, management access or other always-on infrastructure.
+This arrangement allows the Arista and the heavier lab equipment to be powered off without taking down the ordinary RJ45 network, management access, Wi-Fi or other always-on infrastructure.
 
 > **Live UniFi topology screenshot coming at some point.**
 
 Because much of the switching infrastructure consists of third-party equipment, the UniFi topology may not represent every downstream device or link perfectly. The architecture documentation in this repository is the authoritative reference.
+
+### UniFi Port Layout
+
+The physical ports are grouped by purpose rather than assigned arbitrarily. Regular endpoint ports are configured as access ports with a single native VLAN, so connected devices do not need to understand VLAN tagging themselves.
+
+Management devices use VLAN 10, servers use VLAN 20, trusted clients use VLAN 30 and IoT devices use VLAN 40.
+
+The SFP+ uplinks are configured as trunks and carry multiple tagged VLANs between the UDM SE, UniFi Pro Max and Arista. The wireless access point port is also trunk-like: the AP itself is managed through VLAN 10 while client and IoT SSIDs are carried using tagged VLANs such as VLAN 30 and VLAN 40.
+
+Unused ports remain on the default network until they are assigned a specific role.
+
+#### UDM SE Port Layout
+
+> Forgot to commit screenshot while at home
+
+#### UniFi Pro Max 16 PoE Port Layout
+
+>  Forgot to commit screenshot while at home
 
 ### Arista Port Layout
 
