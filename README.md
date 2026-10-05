@@ -33,8 +33,7 @@ The Arista forms the high-speed switching fabric of the lab. Servers, storage an
 
 The network will eventually connect servers, storage, clients, wireless access points and IoT devices using a combination of 1 GbE, 10 GbE and VLANs.
 
-(OUTDATED README SPECIFICATION; NEW TOPOLOGY)
-<img width="4602" height="3607" alt="New_Network_Diagram" src="https://github.com/user-attachments/assets/b90f9e37-c45b-4863-8d34-470680961e70" />
+<img width="4334" height="3156" alt="New_New_Network_Diagram" src="https://github.com/user-attachments/assets/329045be-455c-44db-8ca7-2849305b0a7d" />
 
 This arrangement allows the Arista and the heavier lab equipment to be powered off without taking down the ordinary RJ45 network, management access or other always-on infrastructure.
 
