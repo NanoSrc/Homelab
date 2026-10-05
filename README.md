@@ -55,7 +55,7 @@ Unused ports remain on the default network until they are assigned a specific ro
 
 #### UniFi Pro Max 16 PoE Port Layout
 
->  Forgot to commit screenshot while at home
+<img width="2460" height="1258" alt="Screenshot 2026-10-03 170101" src="https://github.com/user-attachments/assets/47784ba4-21de-4270-843b-075579be635a" />
 
 ### Arista Port Layout
 
@@ -121,11 +121,18 @@ The current and planned setup includes:
 
 > [!NOTE]
 > **NEW ADDITION:**
-> Dell PowerEdge R630  
->  1U of dual-socket enterprise compute  
-> Finally, a server I actually intend to use as the main server.  
-> (Storage budget sold separately)  
-> THIS server is considerably cooler than the HPE one
+> Ubiquiti UniFi Pro Max 16 PoE  
+> Main always-on RJ45 / PoE access switch  
+> 10 GbE uplinks, VLAN-aware access switching and enough PoE to stop abusing the UDM SE for everything  
+> Also has Etherlighting, which is technically useful and therefore not RGB slop ;) 
+
+> [!NOTE]
+> **NEW ADDITION:**
+> Modular 1U utility insert  
+> 6 interchangeable module slots  
+> Currently / Will be housing a Raspberry Pi 4, Raspberry Pi 5 and Zigbee dongle  
+> 3 slots still waiting to acquire a purpose  
+> One of them will probably be sacrificed to decoration because of course infrastructure also needs a bit of life
 
 * Dell PowerEdge R630
   * Primary server
@@ -163,33 +170,28 @@ The current and planned setup includes:
   * Main internet gateway and firewall
   * Inter-VLAN routing
   * DHCP and general network services
-  * UniFi controller
-  * 10 GbE trunk to the main switch
-  * Built-in RJ45 ports currently serve ordinary 1 GbE and management devices
-  * PoE connectivity for devices such as the wireless access point
+  * UniFi Network controller
+  * 10 GbE trunk to the UniFi Pro Max 16 PoE
+  * Built-in RJ45 ports reserved for direct, emergency or deliberately assigned access
   * Acts as the friendly modern translator between me and the pile of retired enterprise hardware
 
-* Cisco Catalyst 3750-X
-  * ~16 years old
-  * 24 × 1GbE RJ45 ports
-  * Layer 2 / Layer 3 switching and routing
-  * Backup / spare switch rather than part of the primary network path
-  * Available for temporary additional RJ45 capacity
-  * Primarily useful as a platform for Cisco networking experiments
-  * Originally bought to provide the Cisco with 10 GbE connectivity before the 48-port Arista appeared and somewhat invalidated the entire purchasing decision
-  
-* Cisco C3KX-NM-10G
-  * Network module for the Catalyst 3750-X
-  * 2 × 1/10GbE SFP+ ports
-  * 2 × 1GbE SFP ports
-  * Bought before the 48-port Arista appeared and made the purchase slightly questionable
-  * Still useful for a 10GbE uplink between the Cisco and the rest of the network
+ * Ubiquiti UniFi Pro Max 16 PoE
+  * Main always-on RJ45 / PoE access switch
+  * 16 × copper Ethernet ports
+  * 2 × 10 GbE SFP+ uplinks
+  * PoE for access points, Raspberry Pis and other infrastructure
+  * **Etherlighting** for useful physical port identification (not RGB slop because it is useful)
+  * 10 GbE trunk to the UDM SE
+  * 10 GbE trunk to the Arista
+  * Keeps the ordinary network alive while the Arista and lab servers are powered down
 
-* Synology RS810+
-  * Old 1U rackmount NAS
-  * 4-bay storage system
-  * Currently provides 16 TB active storage with another spare 16 TB
-  * 1 GbE sadly
+* Custom TrueNAS / Storage Server
+  * Planned 2U or 3U custom NAS
+  * Reuses storage hardware from the old Synology RS810+
+  * Bulk storage, backups and network shares
+  * 10 GbE connectivity
+  * TrueNAS SCALE planned
+  * Because apparently using an old rack NAS (required rails which I did NOT want to invest in) was only the first step toward building another NAS
 
 * Raspberry Pi
   * Planned
@@ -212,8 +214,9 @@ The current and planned setup includes:
   * Temperature and other telemetry
 
 * Rack power distribution
-  * 2 × metered / protected rack PDUs planned
-  * Two metered/protected PDUs divide the rack into an always-on infrastructure side and a lab/high-power side. Core networking and low-power infrastructure can remain online while the Arista, servers and storage lab are powered down.
+  * 2 × metered / protected rack PDUs
+  * The rack is divided into an always-on infrastructure side and a lab / high-power side
+  * Core networking and low-power infrastructure can remain online while the Arista, servers and storage lab are powered down
   * Integrated power monitoring because I would probably rather not know what this setup costs to run
 
 > [!NOTE]
