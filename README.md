@@ -221,26 +221,6 @@ The current and planned setup includes:
 > [!NOTE]
 > Old hardware doesn't mean useless hardware
 
-## Documentation
-
-* [Networking](docs/networking.md)
-* [Infrastructure](docs/infrastructure.md)
-
-## Repository Structure
-
-```text
-homelab/
-├── frontend/          # React + Vite management interface
-├── backend/           # Spring Boot + Kotlin API
-├── docker/            # Docker and Compose configuration
-├── infrastructure/    # Infrastructure automation
-├── configs/           # Sanitized device configurations
-├── scripts/            # Utility and management scripts
-├── services/           # Homelab services
-├── docs/               # Project documentation
-└── diagrams/           # Network and infrastructure diagrams
-```
-
 ## Philosophy
 
 This is a learning environment rather than a production datacenter.
