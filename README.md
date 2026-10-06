@@ -175,7 +175,7 @@ The current and planned setup includes:
   * Built-in RJ45 ports reserved for direct, emergency or deliberately assigned access
   * Acts as the friendly modern translator between me and the pile of retired enterprise hardware
 
- * Ubiquiti UniFi Pro Max 16 PoE
+* Ubiquiti UniFi Pro Max 16 PoE
   * Main always-on RJ45 / PoE access switch
   * 16 × copper Ethernet ports
   * 2 × 10 GbE SFP+ uplinks
