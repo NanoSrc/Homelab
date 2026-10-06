@@ -85,8 +85,7 @@ This includes devices with dedicated out-of-band management interfaces such as:
 * HPE iLO4
 * Proxmox Management
 * Arista Management1
-* Cisco Management
-
+  
 It can also include in-band management interfaces for devices that do not have a dedicated management controller.
 
 The goal is to keep administrative access separate from ordinary server traffic on VLAN 20 and from client / IoT networks.
