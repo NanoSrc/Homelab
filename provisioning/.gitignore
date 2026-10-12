@@ -1,0 +1,6 @@
+# Generated installation images
+*.iso
+
+# Local provisioning secrets
+provisioning/**/answer.local.toml
+provisioning/**/answer.private.toml

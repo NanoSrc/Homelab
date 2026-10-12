@@ -1,0 +1,19 @@
+# R630 Proxmox VE automatic installation profile
+[global]
+keyboard = "de-ch"
+country = "ch"
+timezone = "Europe/Zurich"
+fqdn = "kita.home.arpa"
+mailto = "YOUR_EMAIL"
+root-password-hashed = "YOUR_HASHED_PASSWORD"
+
+[network]
+source = "from-answer"
+cidr = "10.10.20.10/24"
+gateway = "10.10.20.1"
+dns = "10.10.20.1"
+filter.ID_NET_NAME = "nic0"
+
+[disk-setup]
+filesystem = "ext4"
+disk-list = ["sda"]
