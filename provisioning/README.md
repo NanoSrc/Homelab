@@ -2,9 +2,9 @@
 
 Automated installation profiles for Kita and Bocchi.  
 > [!CAUTION]
-> **Important:** Check `filter.ID_NET_NAME` in the answer files.
-> It must match the intended NIC port and be available during installation.
-> Verify the interface name and link status before installing.
+> **Important:** Check `filter.ID_NET_NAME` in the answer files.  
+> It must match the intended NIC port and be available during installation.  
+> Verify the interface name and link status before installing.  
 > Oh and don't forget to fill in the rest of the parameters anyway.
 
 
